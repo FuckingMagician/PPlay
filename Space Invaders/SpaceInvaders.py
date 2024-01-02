@@ -12,8 +12,8 @@ janela.set_title("Space Invaders")
 backs_list = ["backs/back1.png", "backs/back2.png", "backs/back3.png", "backs/back4.png", "backs/back5.png", "backs/back6.png", "backs/back7.png"]
 monster_list = ["monster/green.png", "monster/red.png", "monster/yellow.png"]
 
-def start_game(dif):
-    
+def start_game(dif, shot_cooldown):
+
     running = True
     fundo = GameImage(random.choice(backs_list))
     starship = Sprite("assets/player.png")
@@ -99,7 +99,7 @@ def start_game(dif):
             starship.x = janela.width - starship.width
 
         # Starship Shooting
-        if teclado.key_pressed("SPACE") and tempo > 0.2:
+        if teclado.key_pressed("SPACE") and tempo > shot_cooldown:
             tempo = 0
             shot = Sprite("assets/tiro.png")
             shot.x = starship.x + starship.width / 2 - shot.width / 2
@@ -315,7 +315,7 @@ def main_menu():
         if mouse.is_over_object(play_button):
             if click:
                 menuSound.stop()
-                start_game(dif)
+                start_game(dif, 0.4)
         
         if mouse.is_over_object(exit_button):
             if click:
@@ -384,19 +384,19 @@ def settings(menuSound):
             if mouse.is_button_pressed(1) and mouse.is_over_object(facil):
                 dif = 1
                 menuSound.stop()
-                start_game(dif)
+                start_game(dif, 0.4)
 
         if allow:
             if mouse.is_button_pressed(1) and mouse.is_over_object(medio):
                 dif = 1.5
                 menuSound.stop()
-                start_game(dif)
+                start_game(dif, 0.5)
 
         if allow:
             if mouse.is_button_pressed(1) and mouse.is_over_object(dificil):
                 dif = 2
                 menuSound.stop()
-                start_game(dif)
+                start_game(dif, 0.6)
         
         if teclado.key_pressed("ESC"):
             on_settings = False
